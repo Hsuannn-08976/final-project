@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今天吃什麼？ - 智能餐點決策轉盤</title>
+    <!-- 載入 Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1 class="app-title"><span class="brand-accent">🍽️ Choose</span> for Meals</h1>
+            <p class="app-subtitle">今天吃什麼？讓命運轉盤幫你做決定！</p>
+        </header>
+
+        <main class="app-main">
+            <!-- 左側：轉盤展示區 -->
+            <section class="wheel-section card">
+                <div class="wheel-outer-container">
+                    <div class="wheel-pointer"></div>
+                    <div class="wheel-container">
+                        <canvas id="wheelCanvas" width="450" height="450"></canvas>
+                        <button id="spinBtn" class="spin-button">SPIN</button>
+                    </div>
+                </div>
+                <div id="quickTip" class="quick-tip">點擊轉盤中心或 SPIN 按鈕開始旋轉</div>
+            </section>
+
+            <!-- 右側：資訊與操作面板 -->
+            <section class="control-section">
+                <!-- 今日餐點卡片 -->
+                <div class="card result-card" id="resultCard">
+                    <div class="card-header">
+                        <span class="icon">📅</span>
+                        <h2>今日餐點決定</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="today-choice-display">
+                            <span class="choice-placeholder" id="todayChoiceText">尚未選擇</span>
+                            <span class="choice-badge" id="sourceBadge">自動選擇</span>
+                        </div>
+                        <div class="custom-note-display" id="customNoteDisplay" style="display: none;">
+                            <span class="note-label">想吃的食物：</span>
+                            <span class="note-content" id="customNoteText">無</span>
+                        </div>
+                        <p class="last-updated" id="lastUpdatedText">更新時間：-</p>
+                    </div>
+                </div>
+
+                <!-- 自訂食物清單與管理 -->
+                <div class="card action-card">
+                    <div class="card-header">
+                        <span class="icon">⚙️</span>
+                        <h2>自訂食物清單</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="addFoodForm" class="add-food-form">
+                            <div class="form-group row-group">
+                                <input type="text" id="newFoodName" placeholder="新增自訂食物 (例如: 拉麵)" maxlength="15" required>
+                                <button type="submit" class="add-button">新增</button>
+                            </div>
+                        </form>
+                        <div class="food-options-manager">
+                            <label class="list-label">目前轉盤選項 (💾 設為今日餐點 | ❌ 刪除)</label>
+                            <ul class="food-list" id="foodList">
+                                <!-- JavaScript 動態渲染 -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 歷史紀錄面板 -->
+                <div class="card history-card">
+                    <div class="card-header">
+                        <span class="icon">📜</span>
+                        <h2>近期餐點紀錄</h2>
+                    </div>
+                    <div class="card-body">
+                        <ul class="history-list" id="historyList">
+                            <li class="empty-history">暫無歷史紀錄</li>
+                        </ul>
+                        <button id="clearHistoryBtn" class="clear-history-button" style="display: none;">
+                            清除所有紀錄
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p>© 2026 Choose for Meals. 過程皆用繁體中文呈現。</p>
+        </footer>
+    </div>
+
+    <!-- 噴砂/煙火特效 Canvas (選用，為網頁增色) -->
+    <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+
+    <script src="app.js"></script>
+</body>
+</html>

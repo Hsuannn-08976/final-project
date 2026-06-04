@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A premium, modern glassmorphism Todo List application.">
+  <title>Minimalist Todo List</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="background-decor">
+    <div class="circle circle-1"></div>
+    <div class="circle circle-2"></div>
+  </div>
+
+  <main class="todo-container">
+    <header class="todo-header">
+      <h1>Task Flow</h1>
+      <p class="subtitle">Stay focused, be productive</p>
+    </header>
+
+    <section class="todo-input-section">
+      <form id="todo-form" class="todo-form">
+        <input 
+          type="text" 
+          id="todo-input" 
+          placeholder="新增待辦事項..." 
+          autocomplete="off"
+          required
+        >
+        <button type="submit" id="add-btn" aria-label="新增事項">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+      </form>
+    </section>
+
+    <section class="todo-filter-section">
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all" id="filter-all">
+          全部
+          <span class="count-badge" id="count-all">0</span>
+        </button>
+        <button class="filter-btn" data-filter="active" id="filter-active">
+          未完成
+          <span class="count-badge" id="count-active">0</span>
+        </button>
+        <button class="filter-btn" data-filter="completed" id="filter-completed">
+          已完成
+          <span class="count-badge" id="count-completed">0</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="todo-list-section">
+      <ul id="todo-list" class="todo-list">
+        <!-- Dynamic items will be inserted here -->
+      </ul>
+      <div id="empty-state" class="empty-state">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <p>目前沒有待辦事項</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
