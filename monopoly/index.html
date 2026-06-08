@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地產大亨 - 現代擬物風大富翁</title>
+    <!-- 載入 Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 左側：棋盤展示區 -->
+        <main class="board-wrapper">
+            <div class="board" id="monopolyBoard">
+                <!-- 中間控制板：佔用 grid 2-10 行，2-10 列 -->
+                <div class="center-panel">
+                    <div class="logo-area">
+                        <h1 class="logo-title">MONOPOLY</h1>
+                        <p class="logo-subtitle">地產大亨</p>
+                    </div>
+
+                    <!-- 3D 骰子展示區 -->
+                    <div class="dice-area">
+                        <div class="scene">
+                            <div class="dice" id="dice">
+                                <div class="dice-face face-1">
+                                    <span class="dot"></span>
+                                </div>
+                                <div class="dice-face face-2">
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                </div>
+                                <div class="dice-face face-3">
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                </div>
+                                <div class="dice-face face-4">
+                                    <div class="dot-row">
+                                        <span class="dot"></span>
+                                        <span class="dot"></span>
+                                    </div>
+                                    <div class="dot-row">
+                                        <span class="dot"></span>
+                                        <span class="dot"></span>
+                                    </div>
+                                </div>
+                                <div class="dice-face face-5">
+                                    <div class="dot-row">
+                                        <span class="dot"></span>
+                                        <span class="dot"></span>
+                                    </div>
+                                    <div class="dot-row">
+                                        <span class="dot"></span>
+                                    </div>
+                                    <div class="dot-row">
+                                        <span class="dot"></span>
+                                        <span class="dot"></span>
+                                    </div>
+                                </div>
+                                <div class="dice-face face-6">
+                                    <div class="dot-row">
+                                        <span class="dot"></span>
+                                        <span class="dot"></span>
+                                    </div>
+                                    <div class="dot-row">
+                                        <span class="dot"></span>
+                                        <span class="dot"></span>
+                                    </div>
+                                    <div class="dot-row">
+                                        <span class="dot"></span>
+                                        <span class="dot"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 遊戲即時提示與操作 -->
+                    <div class="action-area">
+                        <div class="turn-indicator" id="turnIndicator">
+                            等待遊戲開始...
+                        </div>
+                        <button id="rollBtn" class="game-btn btn-primary">擲骰子</button>
+                    </div>
+                </div>
+
+                <!-- 40 個格子會由 app.js 動態生成並插入到這裡 -->
+                <!-- 棋子 Token 也會由 app.js 動態生成並以絕對定位放置於此 -->
+            </div>
+        </main>
+
+        <!-- 右側：資訊與狀態控制面板 -->
+        <aside class="sidebar">
+            <!-- 玩家資訊卡片 -->
+            <div class="card status-card">
+                <div class="card-header">
+                    <span class="icon">👥</span>
+                    <h2>玩家狀態</h2>
+                </div>
+                <div class="card-body">
+                    <!-- 玩家 1 (人類) -->
+                    <div class="player-status-row active" id="playerStatus0">
+                        <div class="player-info">
+                            <span class="player-token-color token-red"></span>
+                            <span class="player-name">玩家 (你)</span>
+                        </div>
+                        <div class="player-money" id="playerMoney0">$15,000</div>
+                    </div>
+                    <!-- 玩家 2 (電腦) -->
+                    <div class="player-status-row" id="playerStatus1">
+                        <div class="player-info">
+                            <span class="player-token-color token-blue"></span>
+                            <span class="player-name">電腦 (AI)</span>
+                        </div>
+                        <div class="player-money" id="playerMoney1">$15,000</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 資產清單卡片 -->
+            <div class="card assets-card">
+                <div class="card-header">
+                    <span class="icon">🏠</span>
+                    <h2>資產所有權</h2>
+                </div>
+                <div class="card-body scrollable-body">
+                    <div class="assets-section">
+                        <h3>我的土地</h3>
+                        <div class="assets-grid" id="playerAssets0">
+                            <span class="no-assets">尚未購買任何資產</span>
+                        </div>
+                    </div>
+                    <div class="assets-section">
+                        <h3>電腦的土地</h3>
+                        <div class="assets-grid" id="playerAssets1">
+                            <span class="no-assets">電腦尚未購買任何資產</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 歷史日誌卡片 -->
+            <div class="card log-card">
+                <div class="card-header">
+                    <span class="icon">📜</span>
+                    <h2>遊戲紀錄</h2>
+                </div>
+                <div class="card-body scrollable-body" id="logBody">
+                    <div class="log-entry system-entry">歡迎來到地產大亨！遊戲已準備就緒，請點擊「擲骰子」開始。</div>
+                </div>
+            </div>
+
+            <!-- 控制與設定 -->
+            <div class="sidebar-footer">
+                <button id="resetBtn" class="game-btn btn-secondary">重新開始</button>
+                <div class="audio-control">
+                    <button id="muteBtn" class="mute-btn" title="切換音效">🔊</button>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 全局彈窗：土地購買 / 機會命運卡片 / 訊息提示 -->
+    <div class="modal-overlay" id="modalOverlay">
+        <!-- 土地購買視窗 -->
+        <div class="modal-content card-modal" id="buyModal" style="display: none;">
+            <div class="modal-card-header" id="modalCardColor"></div>
+            <div class="modal-card-body">
+                <h3 class="modal-card-title" id="modalCardName">台北車站</h3>
+                <p class="modal-card-type" id="modalCardType">土地</p>
+                <div class="modal-card-details">
+                    <div class="detail-row">
+                        <span>購買價格</span>
+                        <span class="price-val" id="modalCardPrice">$2,000</span>
+                    </div>
+                    <div class="detail-row">
+                        <span>過路租金</span>
+                        <span class="price-val" id="modalCardRent">$200</span>
+                    </div>
+                </div>
+                <p class="modal-prompt">您是否要購買這塊土地？</p>
+                <div class="modal-actions">
+                    <button id="confirmBuyBtn" class="game-btn btn-primary">確認購買</button>
+                    <button id="cancelBuyBtn" class="game-btn btn-secondary">放棄</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 卡片翻轉視窗 (機會/命運) -->
+        <div class="modal-content card-flip-modal" id="flipModal" style="display: none;">
+            <div class="card-flip-container">
+                <div class="card-flip-inner" id="cardFlipInner">
+                    <!-- 正面 (卡背) -->
+                    <div class="card-face card-back" id="cardBackView">
+                        <div class="card-back-logo">?</div>
+                        <h3 id="cardBackTitle">機會</h3>
+                    </div>
+                    <!-- 反面 (卡面內容) -->
+                    <div class="card-face card-front" id="cardFrontView">
+                        <div class="card-front-header" id="cardFrontHeader">CHANCE</div>
+                        <div class="card-front-body">
+                            <p class="card-text" id="cardDescription">繳納超速罰單 $500。</p>
+                            <div class="card-value-display" id="cardValueEffect">-$500</div>
+                        </div>
+                        <div class="card-front-footer">
+                            <button id="closeFlipModalBtn" class="game-btn btn-primary">確定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 遊戲結束視窗 -->
+        <div class="modal-content msg-modal" id="gameOverModal" style="display: none;">
+            <h2 class="modal-title" id="gameOverTitle">遊戲結束</h2>
+            <div class="game-over-banner" id="gameOverBanner">🏆 你贏了！</div>
+            <p id="gameOverDescription">電腦已破產，你成為了地產大亨！</p>
+            <div class="modal-actions">
+                <button id="gameOverRestartBtn" class="game-btn btn-primary">再玩一次</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
